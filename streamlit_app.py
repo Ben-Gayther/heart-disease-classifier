@@ -1,9 +1,11 @@
-import streamlit as st
 import requests
+import streamlit as st
 from requests.exceptions import RequestException
+
 from app import PREDICTION_ENDPOINT
 
 
+# Define a function to get a single prediction for serving the Streamlit app
 def get_single_prediction(data: dict) -> int:
     try:
         response = requests.get(

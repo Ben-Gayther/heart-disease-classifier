@@ -66,6 +66,7 @@ class HeartDiseaseClassifier:
     @staticmethod
     @check_types
     def prepare_data(df: DataFrame[InputDataSchema]) -> DataFrame[TrainingDataSchema]:
+        # Could replace all negative values with NaN
         df["oldpeak"] = df["oldpeak"].replace(-99.99, np.nan)
         return df
 
@@ -80,7 +81,7 @@ class HeartDiseaseClassifier:
         return self.model.predict_proba(X_transformed)
 
     @check_types
-    def train(self, X: DataFrame[InputDataSchema], y: Series[Optional[int]]):
+    def train(self, X: DataFrame[InputDataSchema], y: Series[int]):
         X_transformed = self.prepare_data(X)
         self.model.fit(X_transformed, y)
 
@@ -92,7 +93,7 @@ class HeartDiseaseClassifier:
 def run_training():
     data = pd.read_csv("data/heart.csv")  # Should use a variable for the path
 
-    data = data.drop_duplicates()  # As I did in the notebook
+    data = data.drop_duplicates()
 
     X = data.drop(columns="target")
     y = data["target"]

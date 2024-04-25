@@ -28,7 +28,13 @@ Will start the server on `http://localhost:8000/`
 
 ## API Prediction Endpoint
 
-Send a GET request to `http://localhost:8000/predict` using the `test_app.py` script. This will return a JSON response like the following:
+Whilst the server is running, send a GET request to the endpoint `http://localhost:8000/predict` using the `test_app.py` script, by running the following command:
+
+```bash
+python test_app.py
+```
+
+This will return a JSON response with the following fields, for example:
 
 ```json
 {
@@ -38,6 +44,8 @@ Send a GET request to `http://localhost:8000/predict` using the `test_app.py` sc
 ```
 
 ## Running the Streamlit App
+
+To run the streamlit app, run the following command:
 
 ```bash
 streamlit run streamlit_app.py

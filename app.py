@@ -1,7 +1,7 @@
 from typing import List
 
-from fastapi import FastAPI, HTTPException, Request
 import pandas as pd
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel, field_validator
 
 from model import MODEL_PATH, HeartDiseaseClassifier
@@ -9,10 +9,12 @@ from model import MODEL_PATH, HeartDiseaseClassifier
 PREDICTION_ENDPOINT = "/predict"
 
 
+# Define the response schema
 class PredictionResponse(BaseModel):
     predictions: List[int]
     probabilities: List[float]
 
+    # Validate the predictions and probabilities fields (outputs of the model)
     @field_validator("predictions")
     def validate_predictions(cls, predictions):
         if set(predictions) not in [{0}, {1}]:
