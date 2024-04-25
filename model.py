@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Optional
 
 import numpy as np
+import pandas as pd
 from pandera import DataFrameModel, Field, check_types
 from pandera.typing import Category, DataFrame, Series
 from xgboost import XGBClassifier
@@ -36,6 +37,7 @@ class InputDataSchema(DataFrameModel):
     )
     restingECG: Series[Category] = Field(isin=[0, 1, 2], alias="resting ECG")
 
+    # target column (optional as it won't be present in the request, only in the training data so may need to adjust this..)
     target: Optional[Series[Category]] = Field(isin=[0, 1])
 
     class Config:
@@ -85,3 +87,39 @@ class HeartDiseaseClassifier:
     def save_model(self):
         with open(self.model_path, "wb") as f:
             pickle.dump(self.model, f)
+
+
+def run_training():
+    data = pd.read_csv("data/heart.csv")  # Should use a variable for the path
+
+    data = data.drop_duplicates()  # As I did in the notebook
+
+    X = data.drop(columns="target")
+    y = data["target"]
+
+    model = HeartDiseaseClassifier(MODEL_PATH)
+
+    model.train(X, y)
+
+    model.save_model()
+    print("Model trained and saved successfully.")
+
+
+def main():
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--train",
+        action="store_true",
+        help="Train the model",
+    )
+
+    args = parser.parse_args()
+
+    if args.train:
+        run_training()
+
+
+if __name__ == "__main__":
+    main()
