@@ -23,6 +23,10 @@ response = requests.get(
 )
 
 print(f"Status code: {response.status_code}")
+assert response.status_code == 200
+assert len(response.json()["predictions"]) == 1
+assert "probabilities" in response.json()
+assert "predictions" in response.json()
 
 # duplicate the sample data to test multiple instances
 N = 1_000
@@ -33,3 +37,13 @@ response = requests.get(
 )
 
 print(f"Status code: {response.status_code}")
+assert response.status_code == 200
+assert len(response.json()["predictions"]) == N
+assert "probabilities" in response.json()
+assert "predictions" in response.json()
+
+
+# Can make these into proper tests using pytest...
+# e.g. test_single_instance_prediction
+
+print("All assertions passed.")
