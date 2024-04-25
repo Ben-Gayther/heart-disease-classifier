@@ -10,4 +10,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 EXPOSE ${HTTP_PORT}
 
-CMD uvicorn app:router --host ${SERVER_HOST} --port ${HTTP_PORT} 
+CMD uvicorn app:router --host ${SERVER_HOST} --port ${HTTP_PORT} --app-dir heart-disease-classifier
