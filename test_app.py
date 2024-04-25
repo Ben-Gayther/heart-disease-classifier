@@ -23,6 +23,7 @@ response = requests.get(
 )
 
 print(f"Status code: {response.status_code}")
+print(response.json())
 assert response.status_code == 200
 assert len(response.json()["predictions"]) == 1
 assert "probabilities" in response.json()
