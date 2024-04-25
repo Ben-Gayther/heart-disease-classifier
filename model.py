@@ -56,11 +56,11 @@ class HeartDiseaseClassifier:
     def __init__(self, model_path: Path):
         self.model_path = Path(model_path)
 
-        if self.model_path.exists():
+        if self.model_path.exists():  # load the model if it exists
             with open(self.model_path, "rb") as f:
                 self.model = pickle.load(f)
-        else:
-            # initialise model with parameters used in initial training
+
+        else:  # if it doesn't exist, create a new model
             self.model = XGBClassifier(random_state=42, enable_categorical=True)
 
     @staticmethod
