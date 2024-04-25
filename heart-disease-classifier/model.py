@@ -8,7 +8,7 @@ from pandera import DataFrameModel, Field, check_types
 from pandera.typing import Category, DataFrame, Series
 from xgboost import XGBClassifier
 
-MODEL_PATH = "model.pkl"
+MODEL_PATH = "models/model.pkl"
 
 
 class InputDataSchema(DataFrameModel):
